@@ -14,7 +14,7 @@ SECRET_KEY = 'u3*mdg*&lhahc6j^u^svx7_@wq&x$sfejf&_@*pny$ukvz(i(6'
 DEBUG = True
 # DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'coronastatsbd.com', 'www.coronastatsbd.com', 'covid19cu.herokuapp.com/']
+ALLOWED_HOSTS = ['127.0.0.1', 'coronastatsbd.com', 'www.coronastatsbd.com', 'covid19cu.herokuapp.com']
 # ALLOWED_HOSTS = ['127.0.0.1', 'covid19city.herokuapp.com']
 
 
