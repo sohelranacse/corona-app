@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>About coronavirus tracker</title>
+    <meta content="The status of Covid-19 such as confirmed, death rate, caused rate,  coronavirus outbreak prediction, recovery rate of Coronavirus information(Covid-19)" name="description" />
+    <meta name="keywords" content="Corona, Covid 19, covid-19, corona bd, outbreak prediction">
+    <meta property="og:title" content="About coronavirus tracker">
+    <link rel="canonical" href="https://coronastatsbd.com/" />
+    <meta name="robots" content="all" />
+    <meta name="googlebot" content="all" />
+    <meta name="googlebot-news" content="all" />
+	<meta content="Sohel Rana" name="Author"/>
+    <meta name="Developer" content="Sohel Rana" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/images/favicon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/images/favicon.png' %}" />
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+
+    <!-- Plotly js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+
+        {%  include 'header.html' %}
+
+        <div class="content-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card" style="text-align: justify;">
+                            <div class="card-header">
+                                <h4 style="margin-bottom: 0;"><i class="fa fa-info-circle"></i> &nbsp;Covid19 Outbreak Prediction Visualization & Data Analysis</h4>
+                            </div>
+                            <div class="card-body">
+                                <h5>What is Coronavirus tracker?</h5>
+                                <p>It is basically a web based data/data collection system that shows the collected data through maps. It usually collects information on corona virus infections from reliable and world-renowned portals or systems. The information collected here is open to everyone, so there is no need to log in to view or use the information. Since it is designed for Bangladeshi citizens, the tracker system has been developed in Bengali. In addition to data/information can be viewed or used in tabular structure. It has API (Application Programming Interface) system which is connected to the national e-service bus for using the collected data. So any other system or organization can connect to this tracker system if needed to get updated information on Corona virus infection. The main purpose of this system is to ensure the provision of reliable information to the general public of the country.</p>
+
+                                <h5>Purpose and goal</h5>
+                                <p>
+                                    <ul>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> Indigenous organizations or citizens should be able to view information / data on Corona infection or prepare various reports or use it for other charitable purposes.</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> With the help of relevant information / data, individuals or organizations can make policy-making decisions.</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> Collect up-to-date information and data from reliable and world-renowned databases and make them usable.</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> To provide reliable information to the people of the country quickly.</li>
+                                    </ul>
+                                </p>
+
+                                <h5>Key Features</h5>
+                                <p>
+                                    <ul>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> User interface arranged in a simple and clear way.</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> Option to display corona virus infection information as default in Bangladesh.</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> User interface built for viewing on mobile/smartphone.</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> Chart/Graph system for showing comparative statistics of country-by-country or country-by-country transit data.</li>
+                                    </ul>
+                                </p>
+
+                                <h5>Benefits</h5>
+                                <p>
+                                    <ul>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> Corona infection related information can be collected and displayed to the user as soon as possible.</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> Relevant information from all over the world including Bangladesh can be presented easily and concisely through charts and tables.</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> Data can be collected and updated automatically from time to time without the need for manual intervention.</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> It is easy to compare and analyze research and data based on the data and statistics provided.</li>
+                                    </ul>
+                                </p>
+                                <h5>Data Source</h5>
+                                <p>
+                                    <ul>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> <i><a href="https://www.jhu.edu" target="_blank">www.jhu.edu</a></i></li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> <i><a href="https://www.who.int" target="_blank">www.who.int</a></i></li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> <i><a href="https://ourworldindata.org" target="_blank">ourworldindata.org</a></i></li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> <i><a href="https://disease.sh" target="_blank">disease.sh</a></i></li>
+                                    </ul>
+                                </p>
+
+                                <h5>Using Parameter's for Covid19 Outbreak Prediction</h5>
+                                <p>
+                                    <ul>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> total_cases</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_cases</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_cases_smoothed</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> total_deaths</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_deaths</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_deaths_smoothed</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> total_cases_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_cases_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_cases_smoothed_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> total_deaths_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_deaths_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_deaths_smoothed_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> reproduction_rate</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> icu_patients</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> icu_patients_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> hosp_patients</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> hosp_patients_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> weekly_icu_admissions</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> weekly_icu_admissions_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> weekly_hosp_admissions</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> weekly_hosp_admissions_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_tests</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> total_tests</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> total_tests_per_thousand</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_tests_per_thousand</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_tests_smoothed</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_tests_smoothed_per_thousand</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> positive_rate</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> tests_per_case</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> total_vaccinations</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> people_vaccinated</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> people_fully_vaccinated</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_vaccinations</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_vaccinations_smoothed</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> total_vaccinations_per_hundred</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> people_vaccinated_per_hundred</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> people_fully_vaccinated_per_hundred</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> new_vaccinations_smoothed_per_million</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> stringency_index</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> population</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> population_density</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> median_age</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> aged_65_older</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> aged_70_older</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> gdp_per_capita</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> extreme_poverty</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> cardiovasc_death_rate</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> diabetes_prevalence</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> female_smokers</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> male_smokers</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> handwashing_facilities</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> hospital_beds_per_thousand</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> life_expectancy</li>
+                                        <li><i class="fa fa-long-arrow-alt-right"></i> human_development_index</li>
+                                    </ul>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        {%  include 'footer.html' %}       
+    </div>
+
+
+
+    <!-- {% static '/' %} -->
+
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>    
+    <script src="{% static '/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+
+
+    <script src="{% static '/js/scripts.js' %}"></script>
+
+    <script src="{% static '/js/settings.js' %}"></script>
+    <script src="{% static '/js/quixnav-init.js' %}"></script>
+    <script src="{% static '/js/styleSwitcher.js' %}"></script>
+
+</body>
+</html>

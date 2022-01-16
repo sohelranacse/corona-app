@@ -1,0 +1,293 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coronavirus Outbreak Prediction</title>
+    <meta content="The status of Covid-19 such as confirmed, death rate, caused rate,  coronavirus outbreak prediction, recovery rate of Coronavirus information(Covid-19)" name="description" />
+    <meta name="keywords" content="Corona, Covid 19, covid-19, corona bd, outbreak prediction">
+    <link rel="canonical" href="https://coronastatsbd.com/" />
+    <meta name="robots" content="all" />
+    <meta name="googlebot" content="all" />
+    <meta name="googlebot-news" content="all" />
+	<meta content="Sohel Rana" name="Author"/>
+    <meta name="Developer" content="Sohel Rana" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <!-- select country -->
+    <link rel="stylesheet" href="{% static '/css/select2.min.css' %}" />
+
+    <!-- Plotly js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+
+        {%  include 'header.html' %}
+    
+        <div class="content-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-8">
+                        <div class="mb-3 update-time" id="lastUpdate"></div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="mb-3">
+                            <select id="country" class="form-control js-example-basic-single" class="form-control" onchange="return predictionData(this.value);">
+                                <option value="AFG">Afghanistan</option>
+                                <option value="ALB">Albania</option>
+                                <option value="DZA">Algeria</option>
+                                <option value="AGO">Angola</option>
+                                <option value="ATG">Antigua and Barbuda</option>
+                                <option value="ARG">Argentina</option>
+                                <option value="ARM">Armenia</option>
+                                <option value="AUS">Australia</option>
+                                <option value="AUT">Austria</option>
+                                <option value="AZE">Azerbaijan</option>
+                                <option value="BHR">Bahrain</option>
+                                <option value="BGD" selected="selected">Bangladesh</option>
+                                <option value="BRB">Barbados</option>
+                                <option value="BLR">Belarus</option>
+                                <option value="BEL">Belgium</option>
+                                <option value="BLZ">Belize</option>
+                                <option value="BEN">Benin</option>
+                                <option value="BTN">Bhutan</option>
+                                <option value="BOL">Bolivia</option>
+                                <option value="BIH">Bosnia</option>
+                                <option value="BWA">Botswana</option>
+                                <option value="BRA">Brazil</option>
+                                <option value="BRN">Brunei</option>
+                                <option value="BGR">Bulgaria</option>
+                                <option value="BFA">Burkina Faso</option>
+                                <option value="BDI">Burundi</option>
+                                <option value="KHM">Cambodia</option>
+                                <option value="CMR">Cameroon</option>
+                                <option value="CAN">Canada</option>
+                                <option value="TCD">Chad</option>
+                                <option value="CHL">Chile</option>
+                                <option value="CHN">China</option>
+                                <option value="COL">Colombia</option>
+                                <option value="CRI">Costa Rica</option>
+                                <option value="HRV">Croatia</option>
+                                <option value="CUB">Cuba</option>
+                                <option value="CYP">Cyprus</option>
+                                <option value="DNK">Denmark</option>
+                                <option value="DJI">Djibouti</option>
+                                <option value="DMA">Dominica</option>
+                                <option value="DOM">Dominican Republic</option>
+                                <option value="ECU">Ecuador</option>
+                                <option value="EGY">Egypt</option>
+                                <option value="SLV">El Salvador</option>
+                                <option value="GNQ">Equatorial Guinea</option>
+                                <option value="ERI">Eritrea</option>
+                                <option value="EST">Estonia</option>
+                                <option value="ETH">Ethiopia</option>
+                                <option value="FJI">Fiji</option>
+                                <option value="FIN">Finland</option>
+                                <option value="FRA">France</option>
+                                <option value="GAB">Gabon</option>
+                                <option value="ZMB">Gambia</option>
+                                <option value="GEO">Georgia</option>
+                                <option value="DEU">Germany</option>
+                                <option value="GHA">Ghana</option>
+                                <option value="GRC">Greece</option>
+                                <option value="GRD">Grenada</option>
+                                <option value="GTM">Guatemala</option>
+                                <option value="GIN">Guinea</option>
+                                <option value="GUY">Guyana</option>
+                                <option value="HND">Honduras</option>
+                                <option value="HUN">Hungary</option>
+                                <option value="IND">India</option>
+                                <option value="IDN">Indonesia</option>
+                                <option value="IRN">Iran</option>
+                                <option value="IRQ">Iraq</option>
+                                <option value="IRL">Ireland</option>
+                                <option value="ISL">Islands</option>
+                                <option value="ISR">Israel</option>
+                                <option value="ITA">Italy</option>
+                                <option value="CIV">Ivory Coast</option>
+                                <option value="JAM">Jamaica</option>
+                                <option value="JPN">Japan</option>
+                                <option value="JOR">Jordan</option>
+                                <option value="KAZ">Kazakhstan</option>
+                                <option value="KEN">Kenya</option>
+                                <option value="KWT">Kuwait</option>
+                                <option value="KGZ">Kyrgyzstan</option>
+                                <option value="LAO">Lao People's Democratic Republic</option>
+                                <option value="LVA">Latvia</option>
+                                <option value="LBN">Lebanon</option>
+                                <option value="LBR">Liberia</option>
+                                <option value="LBY">Libyan Arab Jamahiriya</option>
+                                <option value="LIE">Liechtenstein</option>
+                                <option value="LUX">Luxembourg</option>
+                                <option value="MAC">Macao</option>
+                                <option value="MDG">Madagascar</option>
+                                <option value="MYS">Malaysia</option>
+                                <option value="MDV">Maldives</option>
+                                <option value="MLI">Mali</option>
+                                <option value="MLT">Malta</option>
+                                <option value="MRT">Mauritania</option>
+                                <option value="MEX">Mexico</option>
+                                <option value="MDA">Moldova</option>
+                                <option value="MNG">Mongolia</option>
+                                <option value="MNE">Montenegro</option>
+                                <option value="MAR">Morocco</option>
+                                <option value="MOZ">Mozambique</option>
+                                <option value="NAM">Namibia</option>
+                                <option value="NPL">Nepal</option>
+                                <option value="NLD">Netherlands</option>
+                                <option value="NZL">New Zealand</option>
+                                <option value="NIC">Nicaragua</option>
+                                <option value="NER">Niger</option>
+                                <option value="NGA">Nigeria</option>
+                                <option value="NOR">Norway</option>
+                                <option value="OMN">Oman</option>
+                                <option value="PAK">Pakistan</option>
+                                <option value="PAN">Panama</option>
+                                <option value="PNG">Papua New Guinea</option>
+                                <option value="PRY">Paraguay</option>
+                                <option value="PER">Peru</option>
+                                <option value="PHL">Philippines</option>
+                                <option value="POL">Poland</option>
+                                <option value="PRT">Portugal</option>
+                                <option value="QAT">Qatar</option>
+                                <option value="ROU">Romania</option>
+                                <option value="RUS">Russia</option>
+                                <option value="RWA">Rwanda</option>
+                                <option value="KOR">S. Korea</option>
+                                <option value="KNA">Saint Kitts and Nevis</option>
+                                <option value="LCA">Saint Lucia</option>
+                                <option value="HTI">Saint Martin</option>
+                                <option value="SMR">San Marino</option>
+                                <option value="SAU">Saudi Arabia</option>
+                                <option value="SEN">Senegal</option>
+                                <option value="SLE">Sierra Leone</option>
+                                <option value="SGP">Singapore</option>
+                                <option value="SVK">Slovakia</option>
+                                <option value="SVN">Slovenia</option>
+                                <option value="SOM">Somalia</option>
+                                <option value="ZAF">South Africa</option>
+                                <option value="ESP">Spain</option>
+                                <option value="LKA">Sri Lanka</option>
+                                <option value="SDN">Sudan</option>
+                                <option value="SUR">Suriname</option>
+                                <option value="SWE">Sweden</option>
+                                <option value="CHE">Switzerland</option>
+                                <option value="SYR">Syrian Arab Republic</option>
+                                <option value="TZA">Tanzania</option>
+                                <option value="THA">Thailand</option>
+                                <option value="TTO">Trinidad and Tobago</option>
+                                <option value="TUN">Tunisia</option>
+                                <option value="TUR">Turkey</option>
+                                <option value="UGA">Uganda</option>
+                                <option value="GBR">UK</option>
+                                <option value="UKR">Ukraine</option>
+                                <option value="ARE">United Arab Emirates</option>
+                                <option value="URY">Uruguay</option>
+                                <option value="USA">USA</option>
+                                <option value="UZB">Uzbekistan</option>
+                                <option value="VEN">Venezuela</option>
+                                <option value="VNM">Vietnam</option>
+                                <option value="ZWE">Zimbabwe</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="ChartConfirmed"></div>
+                <div class="row" id="ChartDeaths"></div>
+                <!-- <div class="row" id="ChartRecoverd"></div> -->
+                
+            </div>
+        </div>
+
+        {%  include 'footer.html' %} 
+        
+    </div>
+
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>    
+    <script src="{% static '/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+
+    <script src="{% static '/vendor/datatable/jquery.dataTables.min.js' %}"></script>
+    
+
+    <script src="{% static '/js/select2.min.js' %}"></script>
+
+    <script src="{% static '/js/scripts.js' %}"></script>
+
+    <script src="{% static '/js/settings.js' %}"></script>
+    <script src="{% static '/js/quixnav-init.js' %}"></script>
+    <script src="{% static '/js/styleSwitcher.js' %}"></script>
+
+    <script type="text/javascript">
+
+        function predictionData(iso) {
+            $("#lastUpdate").html('<img src="/static/images/loader.gif">');
+            
+            $.ajax({
+                url: '/getPredictionData',
+                type: "GET",
+                dataType: "json",
+                data:{
+                    iso: iso
+                },
+                success: function(data) {
+                    // console.log(data);
+                    
+                    $('title').html(data.name+' - Coronavirus Outbreak Prediction');
+
+                    $("#lastUpdate").html('<span class="stats-taken"><strong id="stat-taken" class="text-primary">'+data.name+'</strong></span> | Last Update: '+data.lastUpdate);
+
+
+                    // CONFIRMED
+                    $("#ChartConfirmed").html('<div class="col-xl-12"><div class="card" style="padding:0;"><div class="card-header"><h4 class="card-title">Report Confirmed Cases Prediction - '+data.name+'</h4></div><div class="card-body" style="padding:0;"><div id="confirmedChart"></div></div></div>');
+                    prediction_new_confirmed_traccer1 = data.prediction_new_confirmed_traccer1
+                    prediction_new_confirmed_traccer2 = data.prediction_new_confirmed_traccer2
+                    prediction_new_confirmed_layout = data.prediction_new_confirmed_layout
+                    var ScatterChart = [prediction_new_confirmed_traccer1, prediction_new_confirmed_traccer2];
+                    Plotly.newPlot('confirmedChart', ScatterChart, prediction_new_confirmed_layout, {showSendToCloud: true, responsive: true});
+
+                    // DEATHS
+                    $("#ChartDeaths").html('<div class="col-xl-12"><div class="card" style="padding:0;"><div class="card-header"><h4 class="card-title">Report Deaths Prediction - '+data.name+'</h4></div><div class="card-body" style="padding:0;"><div id="deathsChart"></div></div></div>');
+                    prediction_deaths_traccer1 = data.prediction_deaths_traccer1
+                    prediction_deaths_traccer2 = data.prediction_deaths_traccer2
+                    prediction_deaths_layout = data.prediction_deaths_layout
+                    var ScatterChart = [prediction_deaths_traccer1, prediction_deaths_traccer2];
+                    Plotly.newPlot('deathsChart', ScatterChart, prediction_deaths_layout, {showSendToCloud: true, responsive: true});
+                    
+                    // RECOVERED
+                    // $("#ChartRecoverd").html('<div class="col-xl-12"><div class="card" style="padding:0;"><div class="card-header"><h4 class="card-title">Report Recovered Prediction - '+data.name+'</h4></div><div class="card-body" style="padding:0;"><div id="recoveredChart"></div></div></div>');
+                    // prediction_recovered_traccer1 = data.prediction_recovered_traccer1
+                    // prediction_recovered_traccer2 = data.prediction_recovered_traccer2
+                    // prediction_recovered_layout = data.prediction_recovered_layout
+                    // var ScatterChart = [prediction_recovered_traccer1, prediction_recovered_traccer2];
+                    // Plotly.newPlot('recoveredChart', ScatterChart, prediction_recovered_layout, {showSendToCloud: true, responsive: true});
+                                        
+                }
+            });
+        }
+        
+        // Default
+        predictionData('BGD');
+
+        $(document).ready(function() {
+		    $('.js-example-basic-single').select2();
+		});
+    </script>
+</body>
+</html>

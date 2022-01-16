@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Europe - Coronavirus Cases</title>
+    <meta content="The status of Covid-19 such as confirmed, death rate, caused rate,  coronavirus outbreak prediction, recovery rate of Coronavirus information(Covid-19)" name="description" />
+    <meta name="keywords" content="Corona, Covid 19, covid-19, corona bd, outbreak prediction">
+    <meta property="og:title" content="Europe - Coronavirus Cases">
+    <link rel="canonical" href="https://coronastatsbd.com/" />
+    <meta name="robots" content="all" />
+    <meta name="googlebot" content="all" />
+    <meta name="googlebot-news" content="all" />
+	<meta content="Sohel Rana" name="Author"/>
+    <meta name="Developer" content="Sohel Rana" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+
+        {%  include 'header.html' %}
+
+        <div class="content-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Europe</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="continent-map" class="continent-map"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="country-datainfo">
+                                    <div id="country_flag"></div>
+                                    <h3 class="mb-0" id="country_name"></h3>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="country-data">
+                                    <div class="icon gradient-1">
+                                        <i class="fas fa-virus"></i>
+                                    </div>
+                                    <div>
+                                        <span>Total Cases</span>
+                                        <h3 id="country_cases"></h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-xl-6">
+                                <div class="country-data">
+                                    <div class="icon gradient-3">
+                                        <i class="fas fa-bell"></i>
+                                    </div>
+                                    <div>
+                                        <span>Today Cases</span>
+                                        <h3 id="country_todayCases"></h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-xl-6">
+                                <div class="country-data">
+                                    <div class="icon gradient-9">
+                                        <i class="fas fa-procedures"></i>
+                                    </div>
+                                    <div>
+                                        <span>Total Deaths</span>
+                                        <h3 id="country_deaths"></h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-xl-6">
+                                <div class="country-data">
+                                    <div class="icon gradient-12">
+                                        <i class="fas fa-bed"></i>
+                                    </div>
+                                    <div>
+                                        <span>Today Deaths</span>
+                                        <h3 id="country_todayDeaths"></h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-xl-6">
+                                <div class="country-data">
+                                    <div class="icon gradient-4">
+                                        <i class="fas fa-child"></i>
+                                    </div>
+                                    <div>
+                                        <span>Recovered</span>
+                                        <h3 id="country_recovered"></h3>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-xl-6">
+                                <div class="country-data">
+                                    <div class="icon gradient-8">
+                                        <i class="fas fa-head-side-cough"></i>
+                                    </div>
+                                    <div>
+                                        <span>Active</span>
+                                        <h3 id="country_active"></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="country-data">
+                                    <div class="icon gradient-14">
+                                        <i class="fas fa-lungs-virus"></i>
+                                    </div>
+                                    <div>
+                                        <span>Critical</span>
+                                        <h3 id="country_critical"></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="country-data">
+                                    <div class="icon gradient-15">
+                                        <i class="fas fa-vial"></i>
+                                    </div>
+                                    <div>
+                                        <span>Cases Per Million</span>
+                                        <h3 id="country_casesPerOneMillion"></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="country-data">
+                                    <div class="icon gradient-9">
+                                        <i class="fas fa-skull"></i>
+                                    </div>
+                                    <div>
+                                        <span>Deaths Per Million</span>
+                                        <h3 id="country_deathsPerOneMillion"></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {%  include 'footer.html' %} 
+        
+
+    </div>
+
+
+
+
+    <!-- {% static '/' %} -->
+
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="{% static '/vendor/vectormap/jquery.vmap.min.js' %}"></script>
+    
+    <script src="{% static '/vendor/vectormap/maps/continents/jquery.vmap.europe.js' %}"></script>
+
+    <script src="{% static '/js/europe/europe.js' %}"></script>
+    <script src="{% static '/js/scripts.js' %}"></script>
+
+    <script src="{% static '/js/settings.js' %}"></script>
+    <script src="{% static '/js/quixnav-init.js' %}"></script>
+    <script src="{% static '/js/styleSwitcher.js' %}"></script>
+</body>
+</html>

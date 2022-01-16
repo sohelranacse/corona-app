@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+
+    <title>Plot Graph</title>
+
+    <!-- Plotly js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+<div id="chart"></div>
+<div id="chart2"></div>
+
+
+
+<script>
+	trace = {{ trace|safe  }}
+	layout = {{ layout|safe }}
+	var data = [trace];
+	Plotly.newPlot('chart', data, layout, {showSendToCloud: true, responsive: true});
+</script>
+</body>
+</html>

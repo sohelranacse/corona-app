@@ -1,0 +1,436 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coronavirus confirmed, recovered, death cases</title>
+    <meta content="The status of Covid-19 such as confirmed, death rate, caused rate,  coronavirus outbreak prediction, recovery rate of Coronavirus information(Covid-19)" name="description" />
+    <meta name="keywords" content="Corona, Covid 19, covid-19, corona bd, outbreak prediction">
+    <link rel="canonical" href="https://coronastatsbd.com/" />
+    <meta name="robots" content="all" />
+    <meta name="googlebot" content="all" />
+    <meta name="googlebot-news" content="all" />
+	<meta content="Sohel Rana" name="Author"/>
+    <meta name="Developer" content="Sohel Rana" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <!-- select country -->
+    <link rel="stylesheet" href="{% static '/css/select2.min.css' %}" />
+
+    <!-- Plotly js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+
+        {%  include 'header.html' %}
+
+        <div class="content-body">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-xl-8">
+                        <div class="mb-3 update-time" id="lastUpdate"></div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="mb-3">
+                            <select id="country" class="form-control js-example-basic-single" class="form-control" onchange="return countryData(this.value);">
+                                <option value="AFG">Afghanistan</option>
+                                <option value="ALB">Albania</option>
+                                <option value="DZA">Algeria</option>
+                                <option value="AGO">Angola</option>
+                                <option value="ATG">Antigua and Barbuda</option>
+                                <option value="ARG">Argentina</option>
+                                <option value="ARM">Armenia</option>
+                                <option value="AUS">Australia</option>
+                                <option value="AUT">Austria</option>
+                                <option value="AZE">Azerbaijan</option>
+                                <option value="BHR">Bahrain</option>
+                                <option value="BGD" selected="selected">Bangladesh</option>
+                                <option value="BRB">Barbados</option>
+                                <option value="BLR">Belarus</option>
+                                <option value="BEL">Belgium</option>
+                                <option value="BLZ">Belize</option>
+                                <option value="BEN">Benin</option>
+                                <option value="BTN">Bhutan</option>
+                                <option value="BOL">Bolivia</option>
+                                <option value="BIH">Bosnia</option>
+                                <option value="BWA">Botswana</option>
+                                <option value="BRA">Brazil</option>
+                                <option value="BRN">Brunei</option>
+                                <option value="BGR">Bulgaria</option>
+                                <option value="BFA">Burkina Faso</option>
+                                <option value="BDI">Burundi</option>
+                                <option value="KHM">Cambodia</option>
+                                <option value="CMR">Cameroon</option>
+                                <option value="CAN">Canada</option>
+                                <option value="TCD">Chad</option>
+                                <option value="CHL">Chile</option>
+                                <option value="CHN">China</option>
+                                <option value="COL">Colombia</option>
+                                <option value="CRI">Costa Rica</option>
+                                <option value="HRV">Croatia</option>
+                                <option value="CUB">Cuba</option>
+                                <option value="CYP">Cyprus</option>
+                                <option value="DNK">Denmark</option>
+                                <option value="DJI">Djibouti</option>
+                                <option value="DMA">Dominica</option>
+                                <option value="DOM">Dominican Republic</option>
+                                <option value="ECU">Ecuador</option>
+                                <option value="EGY">Egypt</option>
+                                <option value="SLV">El Salvador</option>
+                                <option value="GNQ">Equatorial Guinea</option>
+                                <option value="ERI">Eritrea</option>
+                                <option value="EST">Estonia</option>
+                                <option value="ETH">Ethiopia</option>
+                                <option value="FJI">Fiji</option>
+                                <option value="FIN">Finland</option>
+                                <option value="FRA">France</option>
+                                <option value="GAB">Gabon</option>
+                                <option value="ZMB">Gambia</option>
+                                <option value="GEO">Georgia</option>
+                                <option value="DEU">Germany</option>
+                                <option value="GHA">Ghana</option>
+                                <option value="GRC">Greece</option>
+                                <option value="GRD">Grenada</option>
+                                <option value="GTM">Guatemala</option>
+                                <option value="GIN">Guinea</option>
+                                <option value="GUY">Guyana</option>
+                                <option value="HND">Honduras</option>
+                                <option value="HUN">Hungary</option>
+                                <option value="IND">India</option>
+                                <option value="IDN">Indonesia</option>
+                                <option value="IRN">Iran</option>
+                                <option value="IRQ">Iraq</option>
+                                <option value="IRL">Ireland</option>
+                                <option value="ISL">Islands</option>
+                                <option value="ISR">Israel</option>
+                                <option value="ITA">Italy</option>
+                                <option value="CIV">Ivory Coast</option>
+                                <option value="JAM">Jamaica</option>
+                                <option value="JPN">Japan</option>
+                                <option value="JOR">Jordan</option>
+                                <option value="KAZ">Kazakhstan</option>
+                                <option value="KEN">Kenya</option>
+                                <option value="KWT">Kuwait</option>
+                                <option value="KGZ">Kyrgyzstan</option>
+                                <option value="LAO">Lao People's Democratic Republic</option>
+                                <option value="LVA">Latvia</option>
+                                <option value="LBN">Lebanon</option>
+                                <option value="LBR">Liberia</option>
+                                <option value="LBY">Libyan Arab Jamahiriya</option>
+                                <option value="LIE">Liechtenstein</option>
+                                <option value="LUX">Luxembourg</option>
+                                <option value="MAC">Macao</option>
+                                <option value="MDG">Madagascar</option>
+                                <option value="MYS">Malaysia</option>
+                                <option value="MDV">Maldives</option>
+                                <option value="MLI">Mali</option>
+                                <option value="MLT">Malta</option>
+                                <option value="MRT">Mauritania</option>
+                                <option value="MEX">Mexico</option>
+                                <option value="MDA">Moldova</option>
+                                <option value="MNG">Mongolia</option>
+                                <option value="MNE">Montenegro</option>
+                                <option value="MAR">Morocco</option>
+                                <option value="MOZ">Mozambique</option>
+                                <option value="NAM">Namibia</option>
+                                <option value="NPL">Nepal</option>
+                                <option value="NLD">Netherlands</option>
+                                <option value="NZL">New Zealand</option>
+                                <option value="NIC">Nicaragua</option>
+                                <option value="NER">Niger</option>
+                                <option value="NGA">Nigeria</option>
+                                <option value="NOR">Norway</option>
+                                <option value="OMN">Oman</option>
+                                <option value="PAK">Pakistan</option>
+                                <option value="PAN">Panama</option>
+                                <option value="PNG">Papua New Guinea</option>
+                                <option value="PRY">Paraguay</option>
+                                <option value="PER">Peru</option>
+                                <option value="PHL">Philippines</option>
+                                <option value="POL">Poland</option>
+                                <option value="PRT">Portugal</option>
+                                <option value="QAT">Qatar</option>
+                                <option value="ROU">Romania</option>
+                                <option value="RUS">Russia</option>
+                                <option value="RWA">Rwanda</option>
+                                <option value="KOR">S. Korea</option>
+                                <option value="KNA">Saint Kitts and Nevis</option>
+                                <option value="LCA">Saint Lucia</option>
+                                <option value="HTI">Saint Martin</option>
+                                <option value="SMR">San Marino</option>
+                                <option value="SAU">Saudi Arabia</option>
+                                <option value="SEN">Senegal</option>
+                                <option value="SLE">Sierra Leone</option>
+                                <option value="SGP">Singapore</option>
+                                <option value="SVK">Slovakia</option>
+                                <option value="SVN">Slovenia</option>
+                                <option value="SOM">Somalia</option>
+                                <option value="ZAF">South Africa</option>
+                                <option value="ESP">Spain</option>
+                                <option value="LKA">Sri Lanka</option>
+                                <option value="SDN">Sudan</option>
+                                <option value="SUR">Suriname</option>
+                                <option value="SWE">Sweden</option>
+                                <option value="CHE">Switzerland</option>
+                                <option value="SYR">Syrian Arab Republic</option>
+                                <option value="TZA">Tanzania</option>
+                                <option value="THA">Thailand</option>
+                                <option value="TTO">Trinidad and Tobago</option>
+                                <option value="TUN">Tunisia</option>
+                                <option value="TUR">Turkey</option>
+                                <option value="UGA">Uganda</option>
+                                <option value="GBR">UK</option>
+                                <option value="UKR">Ukraine</option>
+                                <option value="ARE">United Arab Emirates</option>
+                                <option value="URY">Uruguay</option>
+                                <option value="USA">USA</option>
+                                <option value="UZB">Uzbekistan</option>
+                                <option value="VEN">Venezuela</option>
+                                <option value="VNM">Vietnam</option>
+                                <option value="ZWE">Zimbabwe</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="country_summary"></div>
+
+                <div class="row" id="fullChart"></div>
+
+                <div class="row" id="past30DaysChart"></div>
+
+                <div class="row" id="dailyIncidenceData"></div>
+
+                <div class="row" id="table_data"></div>                
+
+                <div class="row" id="district_data"></div>
+
+            </div>
+        </div>
+
+        {%  include 'footer.html' %} 
+        
+    </div>
+
+
+
+
+    <!-- {% static '/' %} -->
+
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>    
+    <script src="{% static '/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+
+    <script src="{% static '/vendor/datatable/jquery.dataTables.min.js' %}"></script>
+
+    <script src="{% static '/js/select2.min.js' %}"></script>
+
+    <script src="{% static '/js/scripts.js' %}"></script>
+
+    <script src="{% static '/js/settings.js' %}"></script>
+    <script src="{% static '/js/quixnav-init.js' %}"></script>
+    <script src="{% static '/js/styleSwitcher.js' %}"></script>
+
+    <script type="text/javascript">
+
+        // page load first time
+        countryData('BGD');
+
+        function countryData(iso) {
+
+            $("#lastUpdate").html('<img src="/static/images/loader.gif">');
+            
+            $.ajax({
+                url: '/getCountryData',
+                type: "GET",
+                dataType: "json",
+                data:{
+                    iso: iso
+                },
+                success: function(data) {
+                    // console.log(data);
+                    var name = data.name;
+                    $('title').html(name+' - Coronavirus confirmed, recovered, death cases');
+
+                    // for only Bangladesh
+                    $("#district_data").empty();
+                    if(iso == 'BGD') {
+                        $("#district_data").html('<div class="col-xl-12"><div class="country-data district_info" onclick="return getDistrictData();"><i class="fa fa-eye"></i> &nbsp; View District Information &nbsp; &nbsp; &nbsp; <span id="districtDataLoad"></span></div></div><div class="col-xl-12" id="district_confirmed_data"></div><div class="col-xl-12" id="district_table_data"></div><div class="col-xl-12" id="dhaka_district_table_data"></div>');
+                    }
+
+                    $("#lastUpdate").html('<span class="stats-taken"><strong id="stat-taken" class="text-primary">'+name+'</strong></span> | Last Update: '+data.lastUpdate);                      
+
+                    $("#country_summary").html('<div class="col-xl-3 col-6"> <div class="country-data"> <div class="icon gradient-3"> <i class="fas fa-bell"></i> </div><div> <span>Lab Test</span> <h3>'+number_format(data.TotalTests)+'</h3> </div></div></div><div class="col-xl-3 col-6"> <div class="country-data"> <div class="icon gradient-1"> <i class="fas fa-virus"></i> </div><div> <span>Confirmed</span> <h3>'+number_format(data.TotalCases)+'</h3> </div></div></div><div class="col-xl-3 col-6"> <div class="country-data"> <div class="icon gradient-4"> <i class="fas fa-child"></i> </div><div> <span>Recovered</span> <h3>'+number_format(data.TotalRecovered)+'</h3> </div></div></div><div class="col-xl-3 col-6"> <div class="country-data"> <div class="icon gradient-9"> <i class="fas fa-procedures"></i> </div><div> <span>Death</span> <h3>'+number_format(data.deaths)+'</h3> </div></div></div><div class="col-xl-3 col-6"> <div class="country-data"> <div class="icon gradient-8"> <i class="fas fa-head-side-cough"></i> </div><div> <span>Active Cases</span> <h3>'+number_format(data.ActiveCases)+'</h3> </div></div></div><div class="col-xl-3 col-6"> <div class="country-data"> <div class="icon gradient-14"> <i class="fas fa-lungs-virus"></i> </div><div> <span>Serious Cases</span> <h3>'+number_format(data.SeriousCases)+'</h3> </div></div></div><div class="col-xl-3 col-6"> <div class="country-data"> <div class="icon gradient-15"> <i class="fas fa-vial"></i> </div><div> <span>Cases Per Million</span> <h3>'+number_format(data.RationPerMillion)+'</h3> </div></div></div><div class="col-xl-3 col-6"> <div class="country-data"> <div class="icon gradient-9"> <i class="fas fa-skull"></i> </div><div> <span>Death Rate(%)</span> <h3>'+data.MortalityRate.toFixed(2)+'</h3> </div></div></div>');
+
+                    // DATA TABLE
+                    var main_data = data.main_data;
+                    var table_data = '<div class="col-xl-12"> <div class="card"> <div class="card-header"> <h4 class="card-title">Report Coronavirus Cases - '+name+'</h4> <span>Export as <button class="btn btn-sm btn-primary" type="button" value="'+iso+'" onclick="return export_country_data(this.value, 1);">.csv</button>&nbsp;<button class="btn btn-sm btn-primary" type="button" value="'+iso+'" onclick="return export_country_data(this.value, 2);">.xls</button></span></div><div class="card-body"> <div class="all-country table-responsive"> <table id="bd_table" class="table table-striped table-bordered"> <thead> <tr> <th>Date</th> <th>Confirmed</th> <th>Recovered</th> <th>Detath</th> <th>Total Confirmed</th> <th>Total Recovered</th> <th>Total Detath</th> </tr></thead> <tbody>';                        
+                    if(main_data.length > 0) {
+                        for(i=0; i<main_data.length;i++){
+                            table_data += '<tr role="row"> <td>'+main_data[i].Date+'</td><td><span class="text-primary">'+main_data[i].New_Confirmed+'</span></td><td><span class="text-success">'+main_data[i].New_Recovered+'</span></td><td><span class="text-danger">'+main_data[i].New_Deaths+'</span></td><td><span class="text-primary">'+main_data[i].Confirmed+'</span></td><td><span class="text-success">'+main_data[i].Recovered+'</span></td><td><span class="text-danger">'+main_data[i].Deaths+'</span></td></tr>';
+                        }
+                    }
+                    table_data += '</tbody> </table> </div></div></div></div>';
+                    $("#table_data").html(table_data);
+                    $('#bd_table').DataTable({ "order": [[ 0, "desc" ]] });
+                    // DATA TABLE END
+
+                    // PAST 30 DAYS CHART
+                    $("#past30DaysChart").html('<div class="col-xl-12"> <div class="card"> <div class="card-header"> <h4 class="card-title">Past 60 Days Coronavirus Cases - '+name+'</h4> </div><div class="card-body"> <div id="past30Days"></div></div></div></div>');
+                    tracePast = data.tracePast
+                    trace2Past = data.trace2Past
+                    trace3Past = data.trace3Past
+                    layoutPast = data.layoutPast
+                    var BarData = [tracePast, trace2Past, trace3Past];
+                    Plotly.newPlot('past30Days', BarData, layoutPast, {showSendToCloud: true, responsive: true});
+
+                    // MAIN CHART
+                    $("#fullChart").html('<div class="col-xl-12"><div class="card" style="padding:0;"><div class="card-header"><h4 class="card-title">Report Coronavirus Cases - '+name+'</h4></div><div class="row"><div class="col-xl-8"><div class="card-body" style="padding:0;"><div id="mainChart"></div></div></div><div class="col-xl-4"><div class="card-body"><div id="summaryPie"></div></div></div></div></div></div>');
+                    traceAll = data.traceAll
+                    traceAll2 = data.traceAll2
+                    traceAll3 = data.traceAll3
+                    layoutAll = data.layoutAll
+                    var ScatterChart = [traceAll, traceAll2, traceAll3];
+                    Plotly.newPlot('mainChart', ScatterChart, layoutAll, {showSendToCloud: true, responsive: true});
+
+                    // pie chart
+                    var PieData = [{
+                        values: [data.TotalCases, data.TotalRecovered, data.deaths],
+                        labels: ['Confirmed', 'Recovered', 'Deaths'],
+                        type: 'pie',
+                        marker: {
+                            colors: ['#7163F1', '#2ECBAC', '#F54251']
+                        }
+                    }];
+                    var PieLayout = {
+                        title: '',
+                        height: 350
+                    };
+                    Plotly.newPlot('summaryPie', PieData, PieLayout, {showSendToCloud: true, responsive: true});
+                    // MAIN CHART END
+
+                    // Daily Incidence Data
+                    $("#dailyIncidenceData").html('<div class="col-xl-12"> <div class="card"> <div class="card-header"> <h4 class="card-title">Daily Incidence Chart From '+data.Days30First+' To '+data.Days30Last+' - '+name+'</h4> </div><div class="card-body"> <div id="dailyIncidenceBar"></div></div><div class="card-body"> <div id="dailyIncidenceScatter"></div></div></div></div>');
+
+                    // bar
+                    trace = data.trace
+                    trace2 = data.trace2
+                    trace3 = data.trace3
+                    layout = data.layout
+                    var BarData = [trace, trace2, trace3];
+                    Plotly.newPlot('dailyIncidenceBar', BarData, layout, {showSendToCloud: true, responsive: true});
+
+                    // scatter
+                    traceS = data.traceS
+                    trace2S = data.trace2S
+                    trace3S = data.trace3S
+                    layout = data.layout
+                    var ScatterData = [traceS, trace2S, trace3S];
+                    Plotly.newPlot('dailyIncidenceScatter', ScatterData, layout, {showSendToCloud: true, responsive: true});
+                    // Daily Incidence Data end
+                }
+            });
+        }
+        
+        // export data
+        function export_country_data(iso, type) {
+            var win = window.open('/export_country_data?iso='+iso+'&type='+type+'', '_blank');
+            win.focus();
+            // $.ajax({
+            //     url: '/export_country_data',
+            //     type: "GET",
+            //     dataType: "json",
+            //     data:{
+            //         iso: iso,
+            //         type: type
+            //     },
+            //     success: function(data) {
+            //         console.log(data);
+            //     }
+            // });
+        }
+        
+        // BANGLADESH DISTRICT & DHAKA AREA DATA
+        function getDistrictData() {
+            $("#districtDataLoad").html('<span class="stats-taken mr-2"><strong id="stat-taken" class="text-primary">Loading...</strong></span>');
+            $.ajax({
+                url: '/getDistrictData',
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    // console.log(data);
+
+                    $("#districtDataLoad").empty();
+
+                    $("#district_confirmed_data").html('<div class="card"> <div class="card-header"> <h4 class="card-title">District Wise Confirmed Cases</h4> </div><div class="card-body"> <div id="district_confirmed"></div></div></div>');
+
+                    // bar chart
+                    trace = data.trace
+                    layout = data.layout
+                    var barData = [trace];
+                    Plotly.newPlot('district_confirmed', barData, layout, {showSendToCloud: true, responsive: true});
+
+                    // DATA TABLE
+                    var main_data = data.main_data;
+                    var district_table_data = '<div class="card"> <div class="card-header"> <h4 class="card-title">Report District Wise Coronavirus Cases</h4> </div><div class="card-body"> <div class="all-country table-responsive"> <table id="district_table" class="table table-striped table-bordered"> <thead> <tr> <th style="width:150px">Serial</th> <th>District</th> <th class="text-right">Total Confirmed</th> </tr></thead> <tbody>';                        
+                    if(main_data.length > 0) {
+                        for(i=0; i<main_data.length;i++){
+                            district_table_data += '<tr role="row"> <td>'+(i+1)+'</td><td><span>'+main_data[i].name+'</span></td><td class="text-right"><span>'+main_data[i].confirmed+'</span></td></tr>';
+                        }
+                    }
+                    district_table_data += '</tbody> </table> </div></div></div>';
+                    $("#district_table_data").html(district_table_data);
+                    $('#district_table').DataTable({ "order": [[ 0, "asc" ]] });
+                    // DATA TABLE END
+
+                    // DATA TABLE DHAKA
+                    var main_data_dhaka = data.main_data_dhaka;
+                    var dhaka_district_table_data = '<div class="card"> <div class="card-header"> <h4 class="card-title">Dhaka District Area Wise Coronavirus Cases</h4> </div><div class="card-body"> <div class="all-country table-responsive"> <table id="dhaka_district_table" class="table table-striped table-bordered"> <thead> <tr> <th style="width:150px">Serial</th> <th>Area (bn)</th> <th>Area (en)</th> <th class="text-right">Total Confirmed</th> </tr></thead> <tbody>';                        
+                    if(main_data_dhaka.length > 0) {
+                        for(i=0; i<main_data_dhaka.length;i++){
+                            dhaka_district_table_data += '<tr role="row"> <td>'+(i+1)+'</td><td><span>'+main_data_dhaka[i].bnName+'</span></td><td><span>'+main_data_dhaka[i].name+'</span></td><td class="text-right"><span>'+main_data_dhaka[i].confirmed+'</span></td></tr>';
+                        }
+                    }
+                    dhaka_district_table_data += '</tbody> </table> </div></div></div>';
+                    $("#dhaka_district_table_data").html(dhaka_district_table_data);
+                    $('#dhaka_district_table').DataTable({ "order": [[ 0, "asc" ]] });
+                    // DATA TABLE END
+
+                }
+            });
+        }
+    
+        function number_format(n, c, d, t) {
+            var c = isNaN(c = Math.abs(c)) ? 2 : c,
+                d = d == undefined ? "" : d,
+                t = t == undefined ? "," : t,
+                s = n < 0 ? "-" : "",
+                i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+                j = (j = i.length) > 3 ? j % 3 : 0;
+
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(4) : "");
+        }
+
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
+
+</body>
+</html>

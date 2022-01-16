@@ -1,0 +1,375 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Corona, Covid 19, covid-19, corona bd">
+    <title>Coronavirus comparison stats report</title>
+    <meta content="The status of Covid-19 such as confirmed, death rate, caused rate,  coronavirus outbreak prediction, recovery rate of Coronavirus information(Covid-19)" name="description" />
+    <meta name="keywords" content="Corona, Covid 19, covid-19, corona bd, outbreak prediction">
+    <meta property="og:title" content="Coronavirus comparison stats report">
+    <link rel="canonical" href="https://coronastatsbd.com/" />
+    <meta name="robots" content="all" />
+    <meta name="googlebot" content="all" />
+    <meta name="googlebot-news" content="all" />
+	<meta content="Sohel Rana" name="Author"/>
+    <meta name="Developer" content="Sohel Rana" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+
+    <!-- Plotly js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+
+        {%  include 'header.html' %}
+
+        <div class="content-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-8">
+                        <div class="mb-3 update-time" id="lastUpdate"></div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="mb-3">
+                            <div class="district_info text-right mr-4" data-toggle="modal" data-target="#countryModal"><i class="fas fa-plus-circle"></i> Add Country</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="confirmed_cases_chart"></div>
+                <div class="row" id="recovered_chart"></div>
+                <div class="row" id="deaths_chart"></div>
+            </div>
+        </div>
+
+        
+        {%  include 'footer.html' %}       
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="countryModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Choose data to show - <span id="totalSelected" style="color:#2ECCAB; font-size: 14px;">Selected(2)</span> <span id="err_select" style="color:#F5385A; font-size: 12px;"></span></h4>
+                    <button type="button" class="close" data-dismiss="modal"><i class="fas fa-times-circle"></i></button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body" style="height: 400px; overflow: auto;">
+                    <div class="row">
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="AFG" name="country[]">Afghanistan</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ALB" name="country[]">Albania</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="DZA" name="country[]">Algeria</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="AGO" name="country[]">Angola</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ATG" name="country[]">Antigua and Barbuda</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ARG" name="country[]">Argentina</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ARM" name="country[]">Armenia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="AUS" name="country[]">Australia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="AUT" name="country[]">Austria</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="AZE" name="country[]">Azerbaijan</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BHR" name="country[]">Bahrain</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BGD" name="country[]" checked="checked">Bangladesh</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BRB" name="country[]">Barbados</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BLR" name="country[]">Belarus</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BEL" name="country[]">Belgium</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BLZ" name="country[]">Belize</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BEN" name="country[]">Benin</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BTN" name="country[]">Bhutan</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BOL" name="country[]">Bolivia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BIH" name="country[]">Bosnia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BWA" name="country[]">Botswana</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BRA" name="country[]">Brazil</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BRN" name="country[]">Brunei</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BGR" name="country[]">Bulgaria</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BFA" name="country[]">Burkina Faso</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="BDI" name="country[]">Burundi</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="KHM" name="country[]">Cambodia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="CMR" name="country[]">Cameroon</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="CAN" name="country[]">Canada</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="TCD" name="country[]">Chad</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="CHL" name="country[]">Chile</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="CHN" name="country[]">China</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="COL" name="country[]">Colombia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="CRI" name="country[]">Costa Rica</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="HRV" name="country[]">Croatia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="CUB" name="country[]">Cuba</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="CYP" name="country[]">Cyprus</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="DNK" name="country[]">Denmark</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="DJI" name="country[]">Djibouti</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="DMA" name="country[]">Dominica</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="DOM" name="country[]">Dominican Republic</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ECU" name="country[]">Ecuador</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="EGY" name="country[]">Egypt</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SLV" name="country[]">El Salvador</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="GNQ" name="country[]">Equatorial Guinea</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ERI" name="country[]">Eritrea</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="EST" name="country[]">Estonia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ETH" name="country[]">Ethiopia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="FJI" name="country[]">Fiji</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="FIN" name="country[]">Finland</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="FRA" name="country[]">France</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="GAB" name="country[]">Gabon</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ZMB" name="country[]">Gambia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="GEO" name="country[]">Georgia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="DEU" name="country[]">Germany</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="GHA" name="country[]">Ghana</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="GRC" name="country[]">Greece</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="GRD" name="country[]">Grenada</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="GTM" name="country[]">Guatemala</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="GIN" name="country[]">Guinea</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="GUY" name="country[]">Guyana</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="HND" name="country[]">Honduras</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="HUN" name="country[]">Hungary</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="IND" name="country[]">India</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="IDN" name="country[]">Indonesia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="IRN" name="country[]">Iran</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="IRQ" name="country[]">Iraq</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="IRL" name="country[]">Ireland</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ISL" name="country[]">Islands</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ISR" name="country[]">Israel</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ITA" name="country[]">Italy</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="CIV" name="country[]">Ivory Coast</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="JAM" name="country[]">Jamaica</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="JPN" name="country[]">Japan</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="JOR" name="country[]">Jordan</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="KAZ" name="country[]">Kazakhstan</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="KEN" name="country[]">Kenya</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="KWT" name="country[]">Kuwait</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="KGZ" name="country[]">Kyrgyzstan</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="LAO" name="country[]">Lao People's Democratic Republic</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="LVA" name="country[]">Latvia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="LBN" name="country[]">Lebanon</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="LBR" name="country[]">Liberia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="LBY" name="country[]">Libyan Arab Jamahiriya</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="LIE" name="country[]">Liechtenstein</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="LUX" name="country[]">Luxembourg</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MAC" name="country[]">Macao</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MDG" name="country[]">Madagascar</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MYS" name="country[]">Malaysia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MDV" name="country[]">Maldives</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MLI" name="country[]">Mali</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MLT" name="country[]">Malta</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MRT" name="country[]">Mauritania</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MEX" name="country[]">Mexico</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MDA" name="country[]">Moldova</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MNG" name="country[]">Mongolia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MNE" name="country[]">Montenegro</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MAR" name="country[]">Morocco</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="MOZ" name="country[]">Mozambique</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="NAM" name="country[]">Namibia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="NPL" name="country[]">Nepal</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="NLD" name="country[]">Netherlands</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="NZL" name="country[]">New Zealand</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="NIC" name="country[]">Nicaragua</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="NER" name="country[]">Niger</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="NGA" name="country[]">Nigeria</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="NOR" name="country[]">Norway</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="OMN" name="country[]">Oman</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="PAK" name="country[]" checked="checked">Pakistan</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="PAN" name="country[]">Panama</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="PNG" name="country[]">Papua New Guinea</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="PRY" name="country[]">Paraguay</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="PER" name="country[]">Peru</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="PHL" name="country[]">Philippines</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="POL" name="country[]">Poland</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="PRT" name="country[]">Portugal</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="QAT" name="country[]">Qatar</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ROU" name="country[]">Romania</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="RUS" name="country[]">Russia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="RWA" name="country[]">Rwanda</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="KOR" name="country[]">S. Korea</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="KNA" name="country[]">Saint Kitts and Nevis</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="LCA" name="country[]">Saint Lucia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="HTI" name="country[]">Saint Martin</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SMR" name="country[]">San Marino</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SAU" name="country[]">Saudi Arabia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SEN" name="country[]">Senegal</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SLE" name="country[]">Sierra Leone</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SGP" name="country[]">Singapore</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SVK" name="country[]">Slovakia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SVN" name="country[]">Slovenia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SOM" name="country[]">Somalia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ZAF" name="country[]">South Africa</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ESP" name="country[]">Spain</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="LKA" name="country[]">Sri Lanka</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SDN" name="country[]">Sudan</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SUR" name="country[]">Suriname</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SWE" name="country[]">Sweden</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="CHE" name="country[]">Switzerland</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="SYR" name="country[]">Syrian Arab Republic</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="TZA" name="country[]">Tanzania</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="THA" name="country[]">Thailand</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="TTO" name="country[]">Trinidad and Tobago</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="TUN" name="country[]">Tunisia</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="TUR" name="country[]">Turkey</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="UGA" name="country[]">Uganda</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="GBR" name="country[]">UK</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="UKR" name="country[]">Ukraine</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ARE" name="country[]">United Arab Emirates</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="URY" name="country[]">Uruguay</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="USA" name="country[]">USA</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="UZB" name="country[]">Uzbekistan</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="VEN" name="country[]">Venezuela</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="VNM" name="country[]">Vietnam</label></div></div>
+                        <div class="col-xl-3 col-6"><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input" value="ZWE" name="country[]">Zimbabwe</label></div></div>
+                    </div>
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" onclick="return showComparision();" style="color: #ffffff;">View Stats</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- {% static '/' %} -->
+
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>    
+    <script src="{% static '/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+
+    <!-- <script src="{% static '/vendor/datatable/jquery.dataTables.min.js' %}"></script> -->
+
+
+    <script src="{% static '/js/scripts.js' %}"></script>
+
+    <script src="{% static '/js/settings.js' %}"></script>
+    <script src="{% static '/js/quixnav-init.js' %}"></script>
+    <script src="{% static '/js/styleSwitcher.js' %}"></script>
+
+    <script type="text/javascript">
+
+        showComparision(['BGD', 'PAK']);
+
+        function showComparision(addon='') {
+            if(addon == '') {
+                var countryList = document.getElementsByName("country[]");
+                
+                var addon = [];
+                for (var i=0; i<countryList.length; i++) {
+                    if (countryList[i].checked == true) {
+                        addon.push(countryList[i].value)
+                    }
+                }
+            }
+            
+            n = addon.length;
+            if(n > 0) {
+                $("#lastUpdate").html('<img src="/static/images/loader.gif">');
+                $('#countryModal').modal('hide');
+
+                $.ajax({
+                    url: '/getComparisonData',
+                    type: "GET",
+                    dataType: "json",
+                    data:{
+                        country: addon
+                    },
+                    success: function(data) {
+                        // console.log(data);
+
+                        // CONFIRMED
+                        $("#confirmed_cases_chart").html('<div class="col-xl-12"><div class="card"><div class="card-header"><h4 class="card-title">Coronavirus Confirmed Cases Report</h4></div><div class="row"><div class="col-xl-6"><div class="card-body"><div id="total_cases"></div></div></div><div class="col-xl-6"><div class="card-body"><div id="new_cases"></div></div></div></div></div></div>');
+                        var ScatterData = data.ct_trace
+                        var layout = {
+                            title: 'Confirmed Cases',
+                            xaxis: { title: 'Date', showgrid: false, zeroline: false },
+                            yaxis: { title: 'Confirmed', showline: false }
+                        };
+                        Plotly.newPlot("total_cases", ScatterData, layout);
+                        
+                        var ScatterData = data.c_trace
+                        var layout = {
+                            title: 'Daily Confirmed Cases',
+                            xaxis: { title: 'Date', showgrid: false, zeroline: false },
+                            yaxis: { title: 'Confirmed', showline: false }
+                        };
+                        Plotly.newPlot("new_cases", ScatterData, layout);
+                        // CONFIRMED END
+
+                        // RECOVERED
+                        $("#recovered_chart").html('<div class="col-xl-12"><div class="card"><div class="card-header"><h4 class="card-title">Coronavirus Recovered Report</h4></div><div class="row"><div class="col-xl-6"><div class="card-body"><div id="total_recoered"></div></div></div><div class="col-xl-6"><div class="card-body"><div id="new_recoered"></div></div></div></div></div></div>');
+                        var ScatterData = data.recvered_all_trace
+                        var layout = {
+                            title: 'Recoverd Report',
+                            xaxis: { title: 'Date', showgrid: false, zeroline: false },
+                            yaxis: { title: 'Recoverd', showline: false }
+                        };
+                        Plotly.newPlot("total_recoered", ScatterData, layout);
+                        
+                        var ScatterData = data.recvered_new_trace
+                        var layout = {
+                            title: 'Daily Recoverd Report',
+                            xaxis: { title: 'Date', showgrid: false, zeroline: false },
+                            yaxis: { title: 'Recoverd', showline: false }
+                        };
+                        Plotly.newPlot("new_recoered", ScatterData, layout);
+                        // RECOVERED END
+
+                        // DEATH
+                        $("#deaths_chart").html('<div class="col-xl-12"><div class="card"><div class="card-header"><h4 class="card-title">Coronavirus Death Report</h4></div><div class="row"><div class="col-xl-6"><div class="card-body"><div id="total_death"></div></div></div><div class="col-xl-6"><div class="card-body"><div id="new_death"></div></div></div></div></div></div>');
+                        var ScatterData = data.death_all_trace
+                        var layout = {
+                            title: 'Death Report',
+                            xaxis: { title: 'Date', showgrid: false, zeroline: false },
+                            yaxis: { title: 'Death', showline: false }
+                        };
+                        Plotly.newPlot("total_death", ScatterData, layout);
+                        
+                        var ScatterData = data.death_new_trace
+                        var layout = {
+                            title: 'Daily Death Report',
+                            xaxis: { title: 'Date', showgrid: false, zeroline: false },
+                            yaxis: { title: 'Death', showline: false }
+                        };
+                        Plotly.newPlot("new_death", ScatterData, layout);
+                        // DEATH END
+
+
+                        $("#lastUpdate").empty();
+                    }
+                });
+            } else {
+                $("#err_select").html('Please select atleast 1 country!');
+            }
+        }
+        
+        $(document).ready(function(){
+            $("input[type=checkbox]").click(function() {
+                var countryList = document.getElementsByName("country[]");
+                var count = 0;
+                for (var i=0; i<countryList.length; i++) {
+                    if (countryList[i].checked == true) {
+                        count++;
+                    }
+                }
+                $("#totalSelected").html('Selected('+count+')');
+                $("#err_select").empty();
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html>
+
+    <meta charset="utf-8">
+
+    <!-- Load d3.js -->
+    <!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <!-- <script src="https://code.highcharts.com/maps/highmaps.js"></script> -->
+    <!-- <script src="https://code.highcharts.com/maps/modules/data.js"></script> -->
+    <!-- <script src="https://code.highcharts.com/maps/modules/exporting.js"></script> -->
+    <!-- <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script> -->
+    <!-- <script src="https://code.highcharts.com/mapdata/custom/world.js"></script> -->
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
+	<title>My Testing Page</title>
+
+</head>
+<body>
+	<h4>Information</h4>
+	<div style="float: left;"> 
+        <canvas id="myChart" style="height: 600px; width: 1300px;"></canvas>
+    </div>
+<script>
+
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ Center_Name|safe }},
+        datasets: [{
+            label: 'Amount',
+            data:  {{ Collection|safe }},
+            backgroundColor: '#03a9fc',
+            borderWidth: 1,
+            barThickness:'flex',
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+</body>
+</html>

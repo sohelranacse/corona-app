@@ -1,0 +1,43 @@
+{% load static %}
+<div class="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="navbar-brand" href="{% url 'country' %}"><img src="{% static '/images/logo-bd.png' %}" alt="">
+                        <span>COVID-19</span></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'country' %}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'comparison' %}">Comparison Stats</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                    Continent
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{% url 'world' %}">World</a>
+                                    <a class="dropdown-item" href="{% url 'asia' %}">Asia</a>
+                                    <a class="dropdown-item" href="{% url 'europe' %}">Europe</a>
+                                    <a class="dropdown-item" href="{% url 'africa' %}">Africa</a>
+                                    <a class="dropdown-item" href="{% url 'australia' %}">Australia</a>
+                                    <a class="dropdown-item" href="{% url 'southAmerica' %}">South America</a>
+                                    <a class="dropdown-item" href="{% url 'northAmerica' %}">North America</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
